@@ -3,12 +3,12 @@ export class TodoData {
     // status: boolean;
     // editing: boolean;
     Editing: boolean;
-    TodoId: string;
     Thing: string;
     Status: boolean;
-    CreateTime: string;
+    TodoId?: string;
+    CreateTime?: string;
 
-    constructor(_Editing : boolean,_TodoId: string,_Thing: string,_Status: boolean,_CreateTime: string) {
+    constructor(_Editing : boolean,_Thing: string,_Status: boolean,_TodoId?: string,_CreateTime?: string) {
         this.Editing = _Editing;
         this.TodoId = _TodoId;
         this.Thing = _Thing;
@@ -16,13 +16,13 @@ export class TodoData {
         this.CreateTime = _CreateTime;
     }
 
-    openEditing() {
-        this.Editing = true;
-    }
+    // openEditing() {
+    //     this.Editing = true;
+    // }
 
-    closeEditing() {
-        this.Editing = false;
-    }
+    // closeEditing() {
+    //     this.Editing = false;
+    // }
 
 }
 

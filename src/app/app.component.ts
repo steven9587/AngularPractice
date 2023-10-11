@@ -59,21 +59,29 @@ export class AppComponent implements OnInit {
   }
 
   enterTodo() {
-    this.todoDataList.push(new TodoData(false, "00000000-0000-0000-0000-000000000000", this.keyINInputText, false, "2023-10-11T00:00:00"))
+    const enterTodo: TodoData = {
+      Editing: false,
+      Thing: this.keyINInputText,
+      Status: false,
+    }
+    this.http.post<TodoData>('/api/todo2_16', enterTodo).subscribe(data => {
+      // 會直接自動回傳該筆insert的資料
+      this.todoDataList.push(data);
+    });
     this.keyINInputText = '';
   }
 
   editing(item: TodoData) {
-    item.openEditing();
+    item.Editing = true;
   }
 
   saveEditInput(item: TodoData, editInput: HTMLInputElement) {
     item.Thing = editInput.value;
-    item.closeEditing();
+    item.Editing = false;
   }
 
   closeEditing(item: TodoData) {
-    item.closeEditing();
+    item.Editing = false;
   }
 
   settodoListStatus(todoListStatusType: number){
