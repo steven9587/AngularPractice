@@ -47,14 +47,17 @@ export class AppComponent implements OnInit {
     this.todoDataList.forEach( item => {
       item.Status = this.toggleAllStatus;
     })
+    this.http.put('/api/todo2_16/Status/' + this.toggleAllStatus, null).subscribe();
   }
 
   check(item: TodoData) {
     item.Status = !item.Status;
+    this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
     this.toggleAllStatus = this.getCompletedTodoList().length == this.todoDataList.length ? true : false;
   }
 
   deleteTodo(item: TodoData) {
+    this.http.delete('/api/todo2_16/' + item.TodoId).subscribe();
     this.todoDataList = this.todoDataList.filter(data => data != item);
   }
 
@@ -81,6 +84,7 @@ export class AppComponent implements OnInit {
   }
 
   closeEditing(item: TodoData) {
+    this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
     item.Editing = false;
   }
 
@@ -112,6 +116,7 @@ export class AppComponent implements OnInit {
   }
 
   clearCompleted() {
+    this.http.delete('/api/todo2_16/clearCompleted').subscribe();
     this.todoDataList = this.todoDataList.filter(data => !data.Status);
   }
 }

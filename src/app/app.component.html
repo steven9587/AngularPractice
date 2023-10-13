@@ -14,8 +14,8 @@
           <label (dblclick)="editing(item)">{{item.Thing}}</label>
           <button (click)="deleteTodo(item)" class="destroy"></button>
         </div>
-        <input *ngIf="item.Editing" [value]="item.Thing" #editInput [(ngModel)]="item.Thing" (keyup.Enter)="item.closeEditing();"
-          (blur)="item.closeEditing();" (mouseenter)="editInput.focus();" class="edit">
+        <input *ngIf="item.Editing" [value]="item.Thing" #editInput [(ngModel)]="item.Thing" (keyup.Enter)="closeEditing(item);"
+          (blur)="closeEditing(item);" (mouseenter)="editInput.focus();" class="edit">
       </li>
     </ul>
   </section>
