@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   // ].map(data => new TodoData(data.thing, data.status, data.editing));
   todoDataList : TodoData[] = [];
 
-  constructor(private http: HttpClient, private todoApiService: TodoApiService) {}
+  constructor(private todoApiService: TodoApiService) {}
 
   ngOnInit(): void {
     // 字串位置可以放檔案位置或api網址
