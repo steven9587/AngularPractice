@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { TodoData, TodoListStatus } from './model/todo.model';
+import { TodoData, TodoListStatus } from './@model/todo.model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
