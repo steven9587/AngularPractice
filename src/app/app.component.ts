@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TodoData, TodoListStatus } from './@model/todo.model';
 import { HttpClient } from '@angular/common/http';
+import { TodoApiService } from './@service/todo-api.service';
 
 @Component({
   selector: 'app-root',
@@ -32,32 +33,35 @@ export class AppComponent implements OnInit {
   // ].map(data => new TodoData(data.thing, data.status, data.editing));
   todoDataList : TodoData[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private todoApiService: TodoApiService) {}
+
   ngOnInit(): void {
     // 字串位置可以放檔案位置或api網址
-    this.http.get<TodoData[]>('/api/todo2_16').subscribe(data => {
+    this.todoApiService.getAllTodoData().subscribe(data => {
+    // this.http.get<TodoData[]>('/api/todo2_16').subscribe(data => {
       this.todoDataList = data;
     });
   }
-
-
 
   toggleAll() {
     this.toggleAllStatus = !this.toggleAllStatus;
     this.todoDataList.forEach( item => {
       item.Status = this.toggleAllStatus;
     })
-    this.http.put('/api/todo2_16/Status/' + this.toggleAllStatus, null).subscribe();
+    // this.http.put('/api/todo2_16/Status/' + this.toggleAllStatus, null).subscribe();
+    this.todoApiService.updateAllTodoDataStatus(this.toggleAllStatus).subscribe();
   }
 
   check(item: TodoData) {
     item.Status = !item.Status;
-    this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
+    // this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
+    this.todoApiService.updateTodoDataStatus(item).subscribe();
     this.toggleAllStatus = this.getCompletedTodoList().length == this.todoDataList.length ? true : false;
   }
 
   deleteTodo(item: TodoData) {
-    this.http.delete('/api/todo2_16/' + item.TodoId).subscribe();
+    // this.http.delete('/api/todo2_16/' + item.TodoId).subscribe();
+    this.todoApiService.deleteTodoData(item).subscribe();
     this.todoDataList = this.todoDataList.filter(data => data != item);
   }
 
@@ -67,7 +71,8 @@ export class AppComponent implements OnInit {
       Thing: this.keyINInputText,
       Status: false,
     }
-    this.http.post<TodoData>('/api/todo2_16', enterTodo).subscribe(data => {
+    // this.http.post<TodoData>('/api/todo2_16', enterTodo).subscribe(data => {
+    this.todoApiService.insertTodoData(enterTodo).subscribe(data => {
       // 會直接自動回傳該筆insert的資料
       this.todoDataList.push(data);
     });
@@ -84,7 +89,8 @@ export class AppComponent implements OnInit {
   }
 
   closeEditing(item: TodoData) {
-    this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
+    // this.http.put('/api/todo2_16/' + item.TodoId, item).subscribe();
+    this.todoApiService.updateTodoDataStatus(item).subscribe();
     item.Editing = false;
   }
 
@@ -116,7 +122,8 @@ export class AppComponent implements OnInit {
   }
 
   clearCompleted() {
-    this.http.delete('/api/todo2_16/clearCompleted').subscribe();
+    // this.http.delete('/api/todo2_16/clearCompleted').subscribe();
+    this.todoApiService.deleteAllCheckedTodoData().subscribe();
     this.todoDataList = this.todoDataList.filter(data => !data.Status);
   }
 }
