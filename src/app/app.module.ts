@@ -7,16 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TodoComponent } from './todo/todo.component';
 import { HeaderComponent } from './todo/header/header.component';
-import { SectionComponent } from './todo/section/section.component';
-import { FooterComponent } from './todo/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
-    HeaderComponent,
-    SectionComponent,
-    FooterComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
